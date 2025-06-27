@@ -4,7 +4,7 @@ import pymongo
 def get_candidate_data():
     try:
         collection = get_collection("Candidate")
-        rows = list(collection.find({"StockId": "2465"}))
+        rows = list(collection.find({}))  # Get all documents from the collection
         return rows
     except Exception as e:
         print('Error:', e)

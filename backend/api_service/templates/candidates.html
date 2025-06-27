@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Candidates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .candidate-btn {
+            background: #e0e0e0;
+            color: #222;
+            border: none;
+            border-radius: 6px;
+            padding: 16px 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            text-align: center;
+            min-height: 60px;
+            box-sizing: border-box;
+        }
+        .candidate-btn.holding {
+            background: #757575; /* lighter grey for holding */
+            color: #fff;
+        }
+        .candidate-btn:hover {
+            filter: brightness(0.95);
+        }
+        .no-candidates {
+            text-align: center;
+            color: #888;
+            margin-top: 40px;
+        }
+        @media (max-width: 1200px) {
+            .candidate-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        @media (max-width: 800px) {
+            .candidate-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .candidate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Candidate</h1>
+        <div class="candidate-grid">
+            {% for candidate in candidates %}
+                <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}" onclick="window.open('https://histock.tw/stock/tchart.aspx?no={{ candidate.stockCode }}', '_blank')">
+                    {{ candidate.companyName }}
+                </button>
+            {% empty %}
+                <div class="no-candidates">No candidates found.</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
