@@ -1,5 +1,6 @@
 import os
 import pymongo
+import logging
 
 def get_candidate_data():
     try:
@@ -7,7 +8,7 @@ def get_candidate_data():
         rows = list(collection.find({}))  # Get all documents from the collection
         return rows
     except Exception as e:
-        print('Error:', e)
+        logging.error('Error:', e)
         return []
 
 def delete_all_from_collection(collection_name):
