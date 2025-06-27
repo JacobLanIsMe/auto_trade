@@ -1,4 +1,5 @@
 import pyodbc
+from model.Candidate import Candidate
 
 def get_candidate_data():
     # Update these variables with your SQL Server details
@@ -18,9 +19,17 @@ def get_candidate_data():
     try:
         with pyodbc.connect(conn_str) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM Candidate WHERE IsDeleted = 0')
+            cursor.execute('SELECT Id, StockCode, CompanyName, PurchasedLot FROM Candidate WHERE IsDeleted = 0')
             rows = cursor.fetchall()
-            return rows
+            candidates = []
+            for row in rows:
+                candidates.append(Candidate(
+                    id=row.Id,
+                    stockCode=row.StockCode,
+                    companyName=row.CompanyName,
+                    isHolding=row.PurchasedLot > 0
+                ))
+            return candidates
     except Exception as e:
         print('Error:', e)
         return []
