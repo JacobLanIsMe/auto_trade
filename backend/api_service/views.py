@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-import sys
-import os
 
-# Add the root directory to sys.path to import service modules
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from service.mongodb_service import get_candidate_data
-from model.Candidate import Candidate
+from api_service.service.mongodb_service import get_candidate_data
+from api_service.model.Candidate import Candidate
 
 class CandidateListView(View):
     def get(self, request):
