@@ -20,4 +20,6 @@ class CandidateListView(View):
                 isHolding=item.get('isHolding', False)
             )
             candidates.append(candidate)
+        # Sort candidates by numeric value of stockCode
+        candidates.sort(key=lambda c: int(''.join(filter(str.isdigit, c.stockCode))) if c.stockCode.isdigit() else float('inf'))
         return render(request, 'candidates.html', {'candidates': candidates})
