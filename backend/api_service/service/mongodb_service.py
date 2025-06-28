@@ -4,11 +4,12 @@ import logging
 
 def get_candidate_data():
     try:
+        logging.info("Try to get data from MongoDb")
         collection = get_collection("Candidate")
         rows = list(collection.find({}))  # Get all documents from the collection
         return rows
     except Exception as e:
-        logging.error('Error:', e)
+        logging.error(f'Error: {e}')
         return []
 
 def delete_all_from_collection(collection_name):
