@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Candidates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +16,9 @@
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 32px 24px;
+            padding: 32px 16px;
+            box-sizing: border-box;
+            width: 100%;
         }
         h1 {
             text-align: center;
@@ -23,7 +26,7 @@
         }
         .candidate-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
             margin-top: 32px;
         }
@@ -40,9 +43,11 @@
             text-align: center;
             min-height: 60px;
             box-sizing: border-box;
+            white-space: normal;
+            word-break: break-word;
         }
         .candidate-btn.holding {
-            background: #757575; /* lighter grey for holding */
+            background: #757575;
             color: #fff;
         }
         .candidate-btn:hover {
@@ -53,24 +58,9 @@
             color: #888;
             margin-top: 40px;
         }
-        @media (max-width: 1200px) {
-            .candidate-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        @media (max-width: 900px) {
-            .candidate-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
         @media (max-width: 700px) {
-            .candidate-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 500px) {
-            .candidate-grid {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 16px 4px;
             }
         }
     </style>
@@ -80,7 +70,7 @@
         <h1>Candidate</h1>
         <div class="candidate-grid">
             {% for candidate in candidates %}
-                <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}" 
+                <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}"
                         onclick="window.open('https://histock.tw/stock/tchart.aspx?no={{ candidate.stockCode }}', '_blank')"
                         title="突破點: {{ candidate.gapUpHigh }}">
                     {{ candidate.companyName }}
