@@ -50,9 +50,6 @@
             background: #757575;
             color: #fff;
         }
-        .candidate-btn:hover {
-            filter: brightness(0.95);
-        }
         .no-candidates {
             text-align: center;
             color: #888;
@@ -71,9 +68,9 @@
         <div class="candidate-grid">
             {% for candidate in candidates %}
                 <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}"
-                        onclick="window.open('https://histock.tw/stock/tchart.aspx?no={{ candidate.stockCode }}', '_blank')"
-                        title="突破點: {{ candidate.gapUpHigh }}">
-                    {{ candidate.companyName }}
+                        onclick="window.open('https://histock.tw/stock/tchart.aspx?no={{ candidate.stockCode }}', '_blank')">
+                    {{ candidate.companyName }} ({{ candidate.stockCode }})<br>
+                    <span style="font-size:0.95em; color:#1976d2;">突破點：{{ candidate.gapUpHigh }}</span>
                 </button>
             {% empty %}
                 <div class="no-candidates">No candidates found.</div>
