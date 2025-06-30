@@ -64,7 +64,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Candidate ({{ candidates|length }})</h1>
+        <h1>Candidate <span style="font-size:0.6em; color:#888; font-weight:normal;">(Count: {{ candidates|length }})</span></h1>
         <div class="candidate-grid">
             {% for candidate in candidates %}
                 <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}"
