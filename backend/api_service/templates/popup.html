@@ -6,18 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K 線圖視窗</title>
     <style>
-        #container {
-            width: 600px;
-            height: 400px;
-            margin: 40px auto;
-        }
+        body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
+    }
+    #companyName {
+      text-align: center;
+      margin: 16px 0;
+      font-size: 1.5rem;
+      padding: 0 10px;
+      word-break: break-word; /* 避免長公司名跑版 */
+    }
+    #container {
+      width: 100%;
+      max-width: 900px; /* 最大寬度限制 */
+      height: 60vh;     /* 高度占視窗高度60%，手機螢幕自適應 */
+      margin: 0 auto 40px;
+      box-sizing: border-box;
+    }
+
+    /* 手機額外微調 */
+    @media (max-width: 480px) {
+      #companyName {
+        font-size: 1.2rem;
+        margin: 12px 0;
+      }
+      #container {
+        height: 50vh;
+      }
+    }
     </style>
     <script type="text/javascript"
         src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 
 <body>
-    <h2 id="companyName" style="text-align: center; margin: 16px 0;"></h2>
+    <h2 id="companyName"></h2>
     <div id="container"></div>
 
     <script>
@@ -35,7 +61,7 @@
             formattedData.sort((a, b) => a.time - b.time);
             const chartOptions = { layout: { textColor: 'black', background: { type: 'solid', color: 'white' } } };
             const chart = LightweightCharts.createChart(document.getElementById("container"), chartOptions);
-            let candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, { upColor: '#ef5350', downColor: '#26a69a', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350' });
+            let candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, { upColor: '#ef5350', downColor: '#26a69a', borderVisible: false, wickUpColor: '#ef5350', wickDownColor: '#26a69a' });
             candleSeries.setData(formattedData);
         });
     </script>
