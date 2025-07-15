@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K 線圖視窗</title>
+    <style>
+        #container {
+            width: 600px;
+            height: 400px;
+            margin: 40px auto;
+        }
+    </style>
+    <script type="text/javascript"
+        src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+
+<body>
+    <h2 id="companyName" style="text-align: center; margin: 16px 0;"></h2>
+    <div id="container"></div>
+
+    <script>
+        window.addEventListener("message", function (event) {
+            const candidate = event.data;
+            document.getElementById("companyName").textContent = candidate.companyName;
+            const techData = JSON.parse(candidate.techData);
+            let formattedData = techData.map(item => ({
+                time: Math.floor(new Date(item.Date).getTime() / 1000),
+                open: item.Open,
+                high: item.High,
+                low: item.Low,
+                close: item.Close,
+            }));
+            formattedData.sort((a, b) => a.time - b.time);
+            const chartOptions = { layout: { textColor: 'black', background: { type: 'solid', color: 'white' } } };
+            const chart = LightweightCharts.createChart(document.getElementById("container"), chartOptions);
+            let candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, { upColor: '#ef5350', downColor: '#26a69a', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350' });
+            candleSeries.setData(formattedData);
+        });
+    </script>
+</body>
+
+</html>

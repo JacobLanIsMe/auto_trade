@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import CandidateListView
+from .views import CandidateListView, popup_chart
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/candidates/', CandidateListView.as_view(), name='candidate-list'),
+    path('popup.html', popup_chart, name='popup-chart'),
 ]

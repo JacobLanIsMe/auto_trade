@@ -68,7 +68,7 @@
         <div class="candidate-grid">
             {% for candidate in candidates %}
                 <button class="candidate-btn{% if candidate.isHolding %} holding{% endif %}"
-                        onclick="window.open('https://histock.tw/stock/tchart.aspx?no={{ candidate.stockCode }}', '_blank')">
+                        onclick="openPopup('{{ candidate.companyName|escapejs }}', '{{candidate.techData|escapejs}}')">
                     {{ candidate.companyName }} ({{ candidate.stockCode }})<br>
                     <span style="font-size:0.95em; color:#1976d2;">突破點：{{ candidate.gapUpHigh }}</span>
                 </button>
@@ -77,5 +77,16 @@
             {% endfor %}
         </div>
     </div>
+
+<script>
+function openPopup(companyName, techData) {
+      const popup = window.open("/popup.html", "popupWindow", "width=600,height=400");
+
+      // 等待 popup 載入完畢後傳資料過去
+      popup.onload = () => {
+        popup.postMessage({companyName: companyName, techData: techData}, "*");
+      };
+    }
+</script>
 </body>
 </html>
