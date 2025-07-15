@@ -19,7 +19,8 @@ def get_candidate_data():
     try:
         with pyodbc.connect(conn_str) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT Id, StockCode, CompanyName, PurchasedLot, GapUpHigh, GapUpLow FROM Candidate WHERE IsDeleted = 0')
+            query = 'SELECT a.Id as Id, a.StockCode as StockCode, a.CompanyName as CompanyName, a.PurchasedLot as PurchasedLot, a.GapUpHigh as GapUpHigh, a.GapUpLow as GapUpLow, b.TechData as TechData FROM Candidate a JOIN StockTech b ON a.StockCode = b.StockCode WHERE a.IsDeleted = 0'
+            cursor.execute(query)
             rows = cursor.fetchall()
             candidates = []
             for row in rows:
@@ -29,7 +30,8 @@ def get_candidate_data():
                     companyName=row.CompanyName,
                     isHolding=row.PurchasedLot > 0,
                     gapUpHigh=row.GapUpHigh,
-                    gapUpLow=row.GapUpLow
+                    gapUpLow=row.GapUpLow,
+                    techData=row.TechData
                 ))
             return candidates
     except Exception as e:
